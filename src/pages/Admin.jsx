@@ -1,41 +1,73 @@
 import { useState } from 'react'
+import { supabase } from '../lib/supabase'
 
 export default function Admin(){
   const [title,setTitle] = useState('')
   const [description,setDescription] = useState('')
   const [content,setContent] = useState('')
-  const [cover,setCover] = useState(null)
+  const [coverFile,setCoverFile] = useState(null)
+  const [uploading,setUploading] = useState(false)
 
   const handleImage = (e) => {
     const file = e.target.files[0]
     if(!file) return
-
-    const reader = new FileReader()
-    reader.onloadend = () => {
-      setCover(reader.result)
-    }
-    reader.readAsDataURL(file)
+    setCoverFile(file)
   }
 
-  const publishPost = () => {
-    const post = {
-      title,
-      description,
-      content,
-      cover,
-      date: new Date().toLocaleDateString()
+  const publishPost = async () => {
+    if(!title || !content) return alert('Title and article are required')
+
+    setUploading(true)
+
+    let cover_url = null
+
+    if(coverFile){
+      const fileName = `${Date.now()}_${coverFile.name}`
+
+      const { error:uploadError } = await supabase.storage
+        .from('covers')
+        .upload(fileName, coverFile)
+
+      if(uploadError){
+        console.error(uploadError)
+        alert('Image upload failed')
+        setUploading(false)
+        return
+      }
+
+      const { data } = supabase.storage
+        .from('covers')
+        .getPublicUrl(fileName)
+
+      cover_url = data.publicUrl
     }
 
-    const existing = JSON.parse(localStorage.getItem('posts') || '[]')
-    existing.unshift(post)
-    localStorage.setItem('posts', JSON.stringify(existing))
+    const { error } = await supabase
+      .from('posts')
+      .insert([
+        {
+          title,
+          description,
+          content,
+          cover_url
+        }
+      ])
 
-    alert('Post published!')
+    if(error){
+      console.error(error)
+      alert('Failed to publish post')
+      setUploading(false)
+      return
+    }
+
+    alert('Article published!')
 
     setTitle('')
     setDescription('')
     setContent('')
-    setCover(null)
+    setCoverFile(null)
+
+    setUploading(false)
   }
 
   return (
@@ -67,16 +99,7 @@ export default function Admin(){
             type="file"
             accept="image/*"
             onChange={handleImage}
-            style={{fontSize:'16px'}}
           />
-
-          {cover && (
-            <img
-              src={cover}
-              alt="cover preview"
-              style={{width:'100%', borderRadius:'10px'}}
-            />
-          )}
 
           <textarea
             placeholder="Write your article here..."
@@ -88,6 +111,7 @@ export default function Admin(){
 
           <button
             onClick={publishPost}
+            disabled={uploading}
             style={{
               padding:'14px',
               fontSize:'16px',
@@ -98,7 +122,7 @@ export default function Admin(){
               cursor:'pointer'
             }}
           >
-            Publish Article
+            {uploading ? 'Publishing...' : 'Publish Article'}
           </button>
 
         </div>
