@@ -8,15 +8,12 @@ export default function PostGrid(){
 
   useEffect(()=>{
     const fetchPosts = async () => {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('posts')
         .select('*')
         .order('created_at', { ascending:false })
 
-      if(!error && data){
-        setPosts(data)
-      }
-
+      if(data) setPosts(data)
       setLoading(false)
     }
 
@@ -41,11 +38,21 @@ export default function PostGrid(){
     )
   }
 
+  const [featured, ...rest] = posts
+
   return (
     <section className="container" style={{padding:'40px 20px'}}>
-      {posts.map((post)=>(
-        <PostCard key={post.id} {...post} />
-      ))}
+
+      <div style={{marginBottom:'40px'}}>
+        <PostCard {...featured} />
+      </div>
+
+      <div style={{display:'grid', gridTemplateColumns:'repeat(3, 1fr)', gap:'30px'}}>
+        {rest.map((post)=> (
+          <PostCard key={post.id} {...post} />
+        ))}
+      </div>
+
     </section>
   )
 }
