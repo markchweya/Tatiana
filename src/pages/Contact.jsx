@@ -1,73 +1,73 @@
 export default function Contact(){
   return (
-    <section className="container" style={{padding:'60px 20px'}}>
-      <div style={{maxWidth:'720px', margin:'0 auto', background:'#ffffff', padding:'40px', border:'1px solid #ddd'}}>
+    <section className="container" style={{padding:'80px 20px'}}>
+      <div style={{maxWidth:'680px', margin:'0 auto'}}>
 
-        <h2 style={{fontSize:'34px', marginBottom:'10px', textAlign:'center'}}>Contact</h2>
-        <p style={{textAlign:'center', marginBottom:'30px', color:'#555'}}>
+        <h2 style={{fontSize:'36px', marginBottom:'8px', textAlign:'center'}}>Contact</h2>
+        <p style={{textAlign:'center', marginBottom:'40px', color:'#666'}}>
           Feel free to send a message.
         </p>
 
-        <form>
+        <form style={{display:'flex', flexDirection:'column', gap:'22px'}}>
 
-          <div style={{marginBottom:'20px'}}>
-            <label style={{display:'block', marginBottom:'6px'}}>Name</label>
-            <input
-              type="text"
-              placeholder="Your name"
-              style={{
-                width:'100%',
-                padding:'12px',
-                border:'1px solid #ccc',
-                fontSize:'16px'
-              }}
-            />
-          </div>
+          <input
+            type="text"
+            placeholder="Your name"
+            style={{
+              width:'100%',
+              padding:'14px 16px',
+              fontSize:'16px',
+              border:'none',
+              borderRadius:'8px',
+              background:'#f4f4f4',
+              outline:'none'
+            }}
+          />
 
-          <div style={{marginBottom:'20px'}}>
-            <label style={{display:'block', marginBottom:'6px'}}>Email</label>
-            <input
-              type="email"
-              placeholder="Your email"
-              style={{
-                width:'100%',
-                padding:'12px',
-                border:'1px solid #ccc',
-                fontSize:'16px'
-              }}
-            />
-          </div>
+          <input
+            type="email"
+            placeholder="Your email"
+            style={{
+              width:'100%',
+              padding:'14px 16px',
+              fontSize:'16px',
+              border:'none',
+              borderRadius:'8px',
+              background:'#f4f4f4',
+              outline:'none'
+            }}
+          />
 
-          <div style={{marginBottom:'25px'}}>
-            <label style={{display:'block', marginBottom:'6px'}}>Message</label>
-            <textarea
-              placeholder="Write your message..."
-              rows="6"
-              style={{
-                width:'100%',
-                padding:'12px',
-                border:'1px solid #ccc',
-                fontSize:'16px',
-                resize:'vertical'
-              }}
-            ></textarea>
-          </div>
+          <textarea
+            placeholder="Write your message..."
+            rows="6"
+            style={{
+              width:'100%',
+              padding:'14px 16px',
+              fontSize:'16px',
+              border:'none',
+              borderRadius:'8px',
+              background:'#f4f4f4',
+              resize:'vertical',
+              outline:'none'
+            }}
+          ></textarea>
 
-          <div style={{textAlign:'center'}}>
-            <button
-              type="submit"
-              style={{
-                padding:'12px 28px',
-                fontSize:'15px',
-                border:'1px solid #333',
-                background:'#333',
-                color:'#fff',
-                cursor:'pointer'
-              }}
-            >
-              Send Message
-            </button>
-          </div>
+          <button
+            type="submit"
+            style={{
+              marginTop:'10px',
+              padding:'14px',
+              fontSize:'16px',
+              border:'none',
+              borderRadius:'8px',
+              background:'#222',
+              color:'#fff',
+              cursor:'pointer'
+            }}
+          >
+            Send Message
+          </button>
 
         </form>
 
