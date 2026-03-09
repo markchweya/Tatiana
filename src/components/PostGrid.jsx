@@ -1,19 +1,19 @@
 import PostCard from './PostCard.jsx'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 export default function PostGrid(){
-  const [posts,setPosts] = useState([])
-
-  useEffect(()=>{
-    const stored = JSON.parse(localStorage.getItem('posts') || '[]')
-    setPosts(stored)
-  },[])
+  const [posts] = useState([])
 
   return (
-    <section style={{padding:'20px'}}>
-      {posts.length === 0 && <p>No posts yet.</p>}
-      {posts.map((post,i)=>(
-        <PostCard key={i} {...post} />
+    <section className="container" style={{padding:'40px 20px'}}>
+      {posts.length === 0 && (
+        <p style={{fontSize:'18px', color:'#666', textAlign:'center'}}>
+          The author hasn't published a post yet.
+        </p>
+      )}
+
+      {posts.map((post)=>(
+        <PostCard key={post.id || post.title} {...post} />
       ))}
     </section>
   )
