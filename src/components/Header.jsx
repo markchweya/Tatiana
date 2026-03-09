@@ -8,13 +8,13 @@ export default function Header(){
         <div className="divider"></div>
 
         <nav className="nav">
-          <a href="#">Home</a>
+          <a href="/">Home</a>
           <span>·</span>
-          <a href="#">Articles</a>
+          <a href="/">Articles</a>
           <span>·</span>
-          <a href="#">About</a>
+          <a href="/about">About</a>
           <span>·</span>
-          <a href="#">Contact</a>
+          <a href="/contact">Contact</a>
         </nav>
 
         <div className="divider"></div>
