@@ -17,12 +17,10 @@ export default function Header(){
             </>
           )}
 
-          {path !== '/' && (
-            <>
+          <>
               <a href="/">Articles</a>
               <span>·</span>
             </>
-          )}
 
           {path !== '/about' && (
             <>
