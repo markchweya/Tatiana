@@ -4,20 +4,33 @@ export default function PostCard({ id, title, description, cover_url }){
   }
 
   return (
-    <div onClick={openPost} style={{cursor:'pointer', padding:'20px', marginBottom:'20px'}}>
-      {cover_url && (
-        <img
-          src={cover_url}
-          alt={title}
-          style={{width:'100%', borderRadius:'10px', marginBottom:'10px'}}
-        />
-      )}
+    <div onClick={openPost} style={{cursor:'pointer', marginBottom:'40px'}}>
 
-      <h3 style={{fontSize:'24px', marginBottom:'8px'}}>{title}</h3>
+      <div
+        style={{
+          width:'100%',
+          height:'220px',
+          borderRadius:'6px',
+          marginBottom:'12px',
+          background: cover_url ? `url(${cover_url}) center/cover no-repeat` : '#e9e9e9',
+          display:'flex',
+          alignItems:'center',
+          justifyContent:'center'
+        }}
+      >
+        {!cover_url && (
+          <span style={{fontSize:'20px', color:'#777', fontFamily:'Georgia, serif'}}>
+            Tatiana's Blog
+          </span>
+        )}
+      </div>
+
+      <h3 style={{fontSize:'22px', marginBottom:'6px'}}>{title}</h3>
 
       {description && (
-        <p style={{color:'#666'}}>{description}</p>
+        <p style={{color:'#666', marginBottom:'8px'}}>{description}</p>
       )}
+
     </div>
   )
 }
