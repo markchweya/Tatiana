@@ -17,7 +17,7 @@ create policy "Public can read posts"
 on posts for select
 using (true);
 
--- Allow authenticated users to insert
-create policy "Authenticated can insert posts"
+-- Allow anyone to insert posts (admin page)
+create policy "Public can insert posts"
 on posts for insert
-with check (auth.role() = 'authenticated');
+with check (true);

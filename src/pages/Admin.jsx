@@ -15,31 +15,30 @@ export default function Admin(){
   }
 
   const publishPost = async () => {
-    if(!title || !content) return alert('Title and article are required')
+    if(!title || !content){
+      alert('Title and article are required')
+      return
+    }
 
     setUploading(true)
 
     let cover_url = null
 
+    // Try upload if image exists
     if(coverFile){
       const fileName = `${Date.now()}_${coverFile.name}`
 
-      const { error:uploadError } = await supabase.storage
+      const { error: uploadError } = await supabase.storage
         .from('covers')
         .upload(fileName, coverFile)
 
-      if(uploadError){
-        console.error(uploadError)
-        alert('Image upload failed')
-        setUploading(false)
-        return
+      if(!uploadError){
+        const { data } = supabase.storage
+          .from('covers')
+          .getPublicUrl(fileName)
+
+        cover_url = data.publicUrl
       }
-
-      const { data } = supabase.storage
-        .from('covers')
-        .getPublicUrl(fileName)
-
-      cover_url = data.publicUrl
     }
 
     const { error } = await supabase
@@ -54,13 +53,13 @@ export default function Admin(){
       ])
 
     if(error){
-      console.error(error)
-      alert('Failed to publish post')
+      console.error('Insert error:', error)
+      alert('Publish failed: ' + error.message)
       setUploading(false)
       return
     }
 
-    alert('Article published!')
+    alert('Article published successfully!')
 
     setTitle('')
     setDescription('')
@@ -72,9 +71,7 @@ export default function Admin(){
 
   return (
     <section className="container" style={{padding:'60px 20px'}}>
-
       <div style={{maxWidth:'800px', margin:'0 auto'}}>
-
         <h2 style={{fontSize:'34px', marginBottom:'30px'}}>Write Article</h2>
 
         <div style={{display:'flex', flexDirection:'column', gap:'20px'}}>
@@ -95,11 +92,7 @@ export default function Admin(){
             style={{padding:'14px', fontSize:'16px', border:'none', background:'#f4f4f4', borderRadius:'8px'}}
           />
 
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImage}
-          />
+          <input type="file" accept="image/*" onChange={handleImage} />
 
           <textarea
             placeholder="Write your article here..."
@@ -112,23 +105,13 @@ export default function Admin(){
           <button
             onClick={publishPost}
             disabled={uploading}
-            style={{
-              padding:'14px',
-              fontSize:'16px',
-              border:'none',
-              borderRadius:'8px',
-              background:'#222',
-              color:'#fff',
-              cursor:'pointer'
-            }}
+            style={{padding:'14px', fontSize:'16px', border:'none', borderRadius:'8px', background:'#222', color:'#fff', cursor:'pointer'}}
           >
             {uploading ? 'Publishing...' : 'Publish Article'}
           </button>
 
         </div>
-
       </div>
-
     </section>
   )
 }
