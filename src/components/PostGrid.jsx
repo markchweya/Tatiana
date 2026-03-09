@@ -38,7 +38,9 @@ export default function PostGrid(){
     )
   }
 
-  const [featured, ...rest] = posts
+  const [featured, ...restAll] = posts
+
+  const rest = restAll.slice(0,3)
 
   return (
     <section className="container" style={{padding:'40px 20px'}}>

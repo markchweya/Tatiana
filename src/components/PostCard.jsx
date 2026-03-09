@@ -12,7 +12,11 @@ export default function PostCard({ id, title, description, cover_url }){
           height:'220px',
           borderRadius:'6px',
           marginBottom:'12px',
-          background: cover_url ? `url(${cover_url}) center/cover no-repeat` : '#e9e9e9',
+          backgroundImage: cover_url ? `url('${cover_url}')` : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundColor: cover_url ? 'transparent' : '#e9e9e9',
           display:'flex',
           alignItems:'center',
           justifyContent:'center'
