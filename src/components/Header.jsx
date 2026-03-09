@@ -1,4 +1,6 @@
 export default function Header(){
+  const path = window.location.pathname
+
   return (
     <header className="site-header">
       <div className="container">
@@ -8,13 +10,30 @@ export default function Header(){
         <div className="divider"></div>
 
         <nav className="nav">
-          <a href="/">Home</a>
-          <span>·</span>
-          <a href="/">Articles</a>
-          <span>·</span>
-          <a href="/about">About</a>
-          <span>·</span>
-          <a href="/contact">Contact</a>
+          {path !== '/' && (
+            <>
+              <a href="/">Home</a>
+              <span>·</span>
+            </>
+          )}
+
+          {path !== '/' && (
+            <>
+              <a href="/">Articles</a>
+              <span>·</span>
+            </>
+          )}
+
+          {path !== '/about' && (
+            <>
+              <a href="/about">About</a>
+              <span>·</span>
+            </>
+          )}
+
+          {path !== '/contact' && (
+            <a href="/contact">Contact</a>
+          )}
         </nav>
 
         <div className="divider"></div>
